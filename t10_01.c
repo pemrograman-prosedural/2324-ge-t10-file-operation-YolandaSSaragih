@@ -1,5 +1,5 @@
-// NIM - Name
-// NIM - Name
+// 12S23034 - PARIAMA MARKUS
+// 12S23050 - YOLANDA SEPTANIA
 
 #include <stdio.h>
 #include "./libs/dorm.h"
