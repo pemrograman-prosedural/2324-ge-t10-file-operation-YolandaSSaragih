@@ -1,14 +1,15 @@
 // 12S23034 - PARIAMA MARKUS
 // 12S23050 - YOLANDA SEPTANIA
-\
+
+
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "./libs/dorm.h"
 #include "./libs/student.h"
 #include "./libs/repository.h"
 
-int main(int _argc, char **_argv)
-{
-    
+int main(int argc, char **argv) {
     int student_size = 0;
     struct student_t students[100];
 
@@ -17,14 +18,14 @@ int main(int _argc, char **_argv)
 
     char input[100];
 
-    char print_command[10][100];
+    char print_command[50][100]; // Ubah ukuran array sesuai kebutuhan
     int student_print_all[50];
     int student_print_all_detail[50];
     int dorm_print_all_detail[50];
     int command_counter = 0;
 
-    FILE *storage = fopen("dorm-repository.txt", "r+");
-    FILE *storage = fopen("student-repository.txt", "r+");
+    FILE *student_storage = fopen("student-repository.txt", "r+");
+    FILE *dorm_storage = fopen("dorm-repository.txt", "r+");
 
     while(1){
         int inputPointer = 0;
@@ -49,7 +50,6 @@ int main(int _argc, char **_argv)
                     break;
                 }
             }
-
         }
         if(strcmp(input,"---") == 0){
             break;
@@ -64,8 +64,6 @@ int main(int _argc, char **_argv)
                 token = strtok(NULL,"#");
             }
 
-            fflush(stdin);
-
             if(strcmp(inputBuffer[0],"student-print-all")==0){
                 strcpy(print_command[command_counter],"student-print-all");
                 student_print_all[command_counter] = student_size;
@@ -73,7 +71,7 @@ int main(int _argc, char **_argv)
             }else if(strcmp(inputBuffer[0],"student-print-all-detail")==0){
                 strcpy(print_command[command_counter],"student-print-all-detail");
                 student_print_all_detail[command_counter] = student_size;
-                command_counter;
+                command_counter++;
             }else if(strcmp(inputBuffer[0],"student-add") == 0){
 
                 if(strcmp(inputBuffer[4],"male") ==0 ){
@@ -137,18 +135,20 @@ int main(int _argc, char **_argv)
 
     for(int indeks = 0 ; indeks < command_counter ; ++indeks){
         if(strcmp(print_command[indeks],"student-print-all") == 0){
-            students->print_student(students,student_print_all[indeks]);
+            print_all_students(students, student_size); // Menggunakan fungsi baru untuk mencetak semua mahasiswa
         }
 
         if(strcmp(print_command[indeks],"student-print-all-detail") == 0){
-            students->print_student_all_detail(students,student_print_all_detail[indeks]);
+            print_all_students_detail(students, student_size); // Menggunakan fungsi baru untuk mencetak detail semua mahasiswa
         }
 
         if(strcmp(print_command[indeks],"dorm-print-all-detail") == 0){
-            dorms->print_dorm_all_detail(dorms,dorm_print_all_detail[indeks]);
+            print_all_dorms_detail(dorms, dorm_size); // Menggunakan fungsi baru untuk mencetak detail semua asrama
         }
     }
-    fclose(storage);
+
+    fclose(student_storage);
+    fclose(dorm_storage);
     
     return 0;
 }

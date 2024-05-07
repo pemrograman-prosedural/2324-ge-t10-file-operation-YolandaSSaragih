@@ -136,9 +136,37 @@ int main(int _argc, char **_argv)
                 dorm_size++;
             }
 
-        }    
+            if(strcmp(inputBuffer[3],"female") == 0){
+                dorms[dorm_size] = create_dorm(
+                    inputBuffer[1],
+                    atoi(inputBuffer[2]),
+                    GENDER_FEMALE
+                );
+                dorm_size++;
+            }
+        }else if(strcmp(inputBuffer[0], "dorm-print-all-detail") == 0){
+            strcpy(print_command[command_counter],"dorm-print-all-detail");
+            dorm_print_all_detail[command_counter] = dorm_size;
+            command_counter++;
         }
     }
+}
+
+    for(int indeks = 0 ; indeks < command_counter ; ++indeks){
+        if(strcmp(print_command[indeks],"student-print-all") == 0){
+            students->print_student(students,student_print_all[indeks]);
+        }
+
+        if(strcmp(print_command[indeks],"student-print-all-detail")==0){
+            students->print_student_detail(students,student_print_all_detail[indeks]);
+        }
+        if(strcmp(print_command[indeks],"dorm-print-all-detail")==0){
+            dorms->print_dorm_all_detail(dorms,dorm_print_all_detail[indeks]);
+        }
+    }
+
+    fclose(storage);
+    
     return 0;
 
 }
